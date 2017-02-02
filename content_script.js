@@ -23,9 +23,7 @@
   chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
       if (request.type === 'client_create_user') {
-        socket.emit('client_create_user', {}, function(response) {
-          // nothing
-        });
+        socket.emit('client_create_user', {});
       }
     });
 })();

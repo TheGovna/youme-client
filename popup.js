@@ -36,7 +36,9 @@ $(function() {
     };
 
     $('#button').click(function() {
-      sendMessage('client_create_user', {}, () => { console.log('sendMessage done!'); });
+      sendMessage('client_create_user', {}, () => {
+        // TODO: send request to create a room
+      });
     });
   });
 });
