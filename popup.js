@@ -1,5 +1,5 @@
 $(function() {
-  var getCurrentTabUrl = function() {
+  var getVideoId = function(callback) {
     var queryInfo = {
       active: true,
       currentWindow: true
@@ -7,9 +7,19 @@ $(function() {
     chrome.tabs.query(queryInfo, function(tabs) {
       var tab = tabs[0];
       var url = tab.url;
-
-      $('#status').text("hello!!!");
+      videoId = getParamByName('v', url);
+      callback(videoId);
     });
+  };
+
+  // http://stackoverflow.com/a/901144
+  var getParamByName = function(name, url) {
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
   };
 
   chrome.tabs.query({
@@ -37,7 +47,15 @@ $(function() {
 
     $('#button').click(function() {
       sendMessage('client_create_user', {}, () => {
-        // TODO: send request to create a room
+        // TODO: uncomment this once i fix user id error
+        // getVideoId(function(videoId) {
+        //   var msg = {
+        //     videoId: videoId,
+        //   };
+        //   sendMessage('client_create_room', msg, () => {
+
+        //   });
+        // });
       });
     });
   });
